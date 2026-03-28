@@ -3,7 +3,9 @@ export default function Home() {
     <div className="flex flex-col items-center justify-center h-screen bg-black">
       <img src="/lamphome.png" alt="LAMP" className="w-1/2" />
 
-      
+      <button className="mt-2 px-6 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition">
+        Contact Us
+      </button>
     </div>
   );
 }
