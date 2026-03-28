@@ -18,7 +18,10 @@ export default function Home() {
       </div>
 
       {/* Services */}
-      <div className="bg-white text-black py-16 px-10">
+      <div
+  className="text-black py-16 px-10 bg-white bg-cover bg-center"
+  style={{ backgroundImage: "url('/bg-pattern.png')" }}
+>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           {/* 01 */}
@@ -69,6 +72,50 @@ export default function Home() {
 
         </div>
       </div>
+     
+      {/* About Section */}
+<div className="bg-white text-black py-20 px-10">
+  <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
+
+    {/* Left - Image */}
+    <div className="flex justify-center">
+      <img src="/lamp.png" alt="LAMP" className="w-3/4" />
+    </div>
+
+    {/* Right - Text */}
+    <div>
+      <h2 className="text-4xl font-extrabold mb-4">
+        WE BRING YOUR IDEAS TO LIFE
+      </h2>
+
+      <div className="w-16 h-1 bg-blue-600 mb-4"></div>
+
+      <h3 className="text-xl text-blue-600 font-semibold mb-3">
+        we love creating
+      </h3>
+
+      <p className="text-gray-600 mb-6">
+      We help brands connect with people through unforgettable moments. 
+      At LAMP, we combine strategic thinking, creative design, and 
+      seamless execution to deliver an End-To-End Event Solution 
+      tailored to your vision. 
+      </p>
+
+      <a
+          href="https://wa.me/966542326719"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button className="mt-2 px-6 py-2 border border-black text-black rounded-lg hover:bg-black hover:text-white transition">
+            Contact Us
+          </button>
+        </a>
+
+      
+    </div>
+
+  </div>
+</div>
 
     </div>
   );
