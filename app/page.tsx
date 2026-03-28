@@ -1,3 +1,6 @@
+import StatsSection from "./components/StatsSection";
+import ClientsSection from "./components/ClientsSection";
+
 export default function Home() {
   return (
     <div className="bg-black text-white">
@@ -116,7 +119,8 @@ export default function Home() {
 
   </div>
 </div>
-
+<StatsSection />
+<ClientsSection />
     </div>
   );
 }
