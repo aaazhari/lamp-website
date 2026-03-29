@@ -1,5 +1,6 @@
 import StatsSection from "./components/StatsSection";
 import ClientsSection from "./components/ClientsSection";
+import FooterSection from "./components/FooterSection";
 
 export default function Home() {
   return (
@@ -22,7 +23,7 @@ export default function Home() {
 
       {/* Services */}
       <div
-  className="text-black py-16 px-10 bg-white bg-cover bg-center"
+  id="services" className="text-black py-16 px-10 bg-white bg-cover bg-center"
   style={{ backgroundImage: "url('/bg-pattern.png')" }}
 >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -77,7 +78,7 @@ export default function Home() {
       </div>
      
       {/* About Section */}
-<div className="bg-white text-black py-20 px-10">
+<div id="about" className="bg-white text-black py-20 px-10">
   <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-10">
 
     {/* Left - Image */}
@@ -121,6 +122,7 @@ export default function Home() {
 </div>
 <StatsSection />
 <ClientsSection />
+<FooterSection />
     </div>
   );
 }
