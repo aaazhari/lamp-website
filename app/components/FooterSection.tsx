@@ -7,7 +7,7 @@ export default function FooterSection() {
             <div>
               <h3 className="text-2xl font-extrabold uppercase">Address</h3>
               <p className="mt-2 text-xl">2750 Altahlia Street, Jeddah, KSA</p>
-              <p className="mt-2 text-xl">111 Al Olaya Street, Riyadh, KSA</p>
+              <p className="mt-2 text-xl">Uthman Ibn Affan Rd, An Nuzhah, Riyadh, KSA</p>
             </div>
   
             <div>
