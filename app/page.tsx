@@ -11,7 +11,7 @@ export default function Home() {
         <img src="/lamphome.png" alt="LAMP" className="w-4/5 md:w-1/2" />
 
         <a
-          href="https://wa.me/966542326719"
+          href="https://wa.me/966500032297"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -106,7 +106,7 @@ export default function Home() {
       </p>
 
       <a
-          href="https://wa.me/966542326719"
+          href="https://wa.me/966500032297"
           target="_blank"
           rel="noopener noreferrer"
         >

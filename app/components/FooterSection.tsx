@@ -23,12 +23,12 @@ export default function FooterSection() {
             <div>
               <h3 className="text-2xl font-extrabold uppercase">Phone</h3>
               <a
-                href="https://wa.me/966542326719"
+                href="https://wa.me/966500032297"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 block text-xl hover:underline"
               >
-                +966 54 232 6719
+                +966 50 003 2297
               </a>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function FooterSection() {
           {/* Middle */}
           <div className="space-y-5 text-2xl font-bold uppercase">
             <a href="#about" className="block hover:text-gray-300">About Us</a>
-            <a  href="https://wa.me/966542326719"
+            <a  href="https://wa.me/966500032297"
                 target="_blank"
                 rel="noopener noreferrer" 
                 className="block hover:text-gray-300">Contact Us</a>
