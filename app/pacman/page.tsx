@@ -204,9 +204,11 @@ function moveGhosts() {
     if (ghostMoveCounter % ghostSpeed !== 0) return;
   
     ghosts = ghosts.map((ghost) => {
-      const possibleDirections: Direction[] = ["left", "right", "up", "down"].filter(
-        (dir) => canMove(ghost.x, ghost.y, dir)
-      ) as Direction[];
+        const ghostDirections: Direction[] = ["left", "right", "up", "down"];
+
+        const possibleDirections = ghostDirections.filter((dir) =>
+          canMove(ghost.x, ghost.y, dir)
+        );
   
       if (possibleDirections.length === 0) return ghost;
   
