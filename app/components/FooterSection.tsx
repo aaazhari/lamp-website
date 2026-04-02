@@ -34,7 +34,7 @@ export default function FooterSection() {
             <div>
             <a href="/pacman">
   <button className="mt-2 px-6 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition">
-    Play Game1
+    Play Game
   </button>
 </a>
             </div>
