@@ -44,7 +44,6 @@ export default function PacmanPage() {
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d")!;
-
     let animationFrameId = 0;
     let lastMoveTime = 0;
     const moveDelay = 170;
@@ -94,7 +93,7 @@ export default function PacmanPage() {
 
     function drawMaze() {
       ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, canvas?.width ?? 0, canvas?.height ?? 0);
+      ctx.fillRect(0, 0, canvas!.width, canvas!.height);
 
       ctx.strokeStyle = "#2563eb";
       ctx.lineWidth = 2;
@@ -182,7 +181,10 @@ export default function PacmanPage() {
     }
 
     function movePacman() {
-      if (nextDirection !== "none" && canMove(pacman.x, pacman.y, nextDirection)) {
+      if (
+        nextDirection !== "none" &&
+        canMove(pacman.x, pacman.y, nextDirection)
+      ) {
         direction = nextDirection;
       }
 
@@ -195,40 +197,44 @@ export default function PacmanPage() {
     }
 
     let ghostMoveCounter = 0;
-const ghostSpeed = 3; // higher = slower (try 3–6)
+    const ghostSpeed = 4;
 
-function moveGhosts() {
-    ghostMoveCounter++;
-  
-    // Only move ghosts every few frames
-    if (ghostMoveCounter % ghostSpeed !== 0) return;
-  
-    ghosts = ghosts.map((ghost) => {
+    function moveGhosts() {
+      ghostMoveCounter++;
+
+      if (ghostMoveCounter % ghostSpeed !== 0) return;
+
+      ghosts = ghosts.map((ghost) => {
         const ghostDirections: Direction[] = ["left", "right", "up", "down"];
 
         const possibleDirections = ghostDirections.filter((dir) =>
           canMove(ghost.x, ghost.y, dir)
         );
-  
-      if (possibleDirections.length === 0) return ghost;
-  
-      const bestDirection = possibleDirections.sort((a, b) => {
-        const nextA = getNextPosition(ghost.x, ghost.y, a);
-        const nextB = getNextPosition(ghost.x, ghost.y, b);
-  
-        const distA = Math.abs(nextA.x - pacman.x) + Math.abs(nextA.y - pacman.y);
-        const distB = Math.abs(nextB.x - pacman.x) + Math.abs(nextB.y - pacman.y);
-  
-        return distA - distB;
-      })[0];
-  
-      const next = getNextPosition(ghost.x, ghost.y, bestDirection);
-      return { ...ghost, x: next.x, y: next.y };
-    });
-  }
+
+        if (possibleDirections.length === 0) return ghost;
+
+        const bestDirection = possibleDirections.sort((a, b) => {
+          const nextA = getNextPosition(ghost.x, ghost.y, a);
+          const nextB = getNextPosition(ghost.x, ghost.y, b);
+
+          const distA =
+            Math.abs(nextA.x - pacman.x) + Math.abs(nextA.y - pacman.y);
+          const distB =
+            Math.abs(nextB.x - pacman.x) + Math.abs(nextB.y - pacman.y);
+
+          return distA - distB;
+        })[0];
+
+        const next = getNextPosition(ghost.x, ghost.y, bestDirection);
+        return { ...ghost, x: next.x, y: next.y };
+      });
+    }
 
     function checkCollisions() {
-      const hitGhost = ghosts.some((ghost) => ghost.x === pacman.x && ghost.y === pacman.y);
+      const hitGhost = ghosts.some(
+        (ghost) => ghost.x === pacman.x && ghost.y === pacman.y
+      );
+
       if (hitGhost) {
         setStatus("lose");
         return true;
@@ -273,12 +279,40 @@ function moveGhosts() {
       if (e.key === "ArrowRight") nextDirection = "right";
     }
 
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    function handleTouchStart(e: TouchEvent) {
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    }
+
+    function handleTouchEnd(e: TouchEvent) {
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx > 20) nextDirection = "right";
+        else if (dx < -20) nextDirection = "left";
+      } else {
+        if (dy > 20) nextDirection = "down";
+        else if (dy < -20) nextDirection = "up";
+      }
+    }
+
     window.addEventListener("keydown", handleKey);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
+
     render();
     animationFrameId = requestAnimationFrame(gameLoop);
 
     return () => {
       window.removeEventListener("keydown", handleKey);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(animationFrameId);
     };
   }, [status]);
