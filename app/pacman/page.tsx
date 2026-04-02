@@ -43,8 +43,7 @@ export default function PacmanPage() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas.getContext("2d")!;
 
     let animationFrameId = 0;
     let lastMoveTime = 0;
