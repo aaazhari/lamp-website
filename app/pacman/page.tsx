@@ -144,9 +144,7 @@ export default function PacmanPage() {
       {status !== "playing" && (
         <div className="text-center">
           <h1 className="text-4xl font-bold">Welcome to LAMP Event</h1>
-          <p className="mt-4 text-xl">
-            {status === "win" ? "You Win 🎉" : "You Lose 😢"}
-          </p>
+          <p className="mt-4 text-xl"> IHC Bring Your Kid To Work Day</p>
         </div>
       )}
     </div>
