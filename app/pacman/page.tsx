@@ -25,6 +25,7 @@ export default function PacmanPage() {
     let dy = 0;
 
     function draw() {
+        if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = "yellow";
