@@ -94,7 +94,7 @@ export default function PacmanPage() {
 
     function drawMaze() {
       ctx.fillStyle = "#000000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, canvas?.width ?? 0, canvas?.height ?? 0);
 
       ctx.strokeStyle = "#2563eb";
       ctx.lineWidth = 2;
