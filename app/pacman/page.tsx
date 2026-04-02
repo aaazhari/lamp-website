@@ -88,13 +88,64 @@ export default function PacmanPage() {
   }, [status]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-black text-white">
-      {status === "playing" && <canvas ref={canvasRef} width={500} height={300} />}
-
+    <div className="flex flex-col items-center justify-center h-screen bg-black text-white gap-4">
+      {status === "playing" && (
+        <>
+          <canvas ref={canvasRef} width={500} height={300} />
+  
+          {/* Mobile Controls */}
+          <div className="grid grid-cols-3 gap-2 mt-4">
+            <div></div>
+            <button
+              onClick={() => {
+                window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+              }}
+              className="bg-white text-black px-4 py-2 rounded"
+            >
+              ↑
+            </button>
+            <div></div>
+  
+            <button
+              onClick={() => {
+                window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
+              }}
+              className="bg-white text-black px-4 py-2 rounded"
+            >
+              ←
+            </button>
+  
+            <div></div>
+  
+            <button
+              onClick={() => {
+                window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" }));
+              }}
+              className="bg-white text-black px-4 py-2 rounded"
+            >
+              →
+            </button>
+  
+            <div></div>
+            <button
+              onClick={() => {
+                window.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+              }}
+              className="bg-white text-black px-4 py-2 rounded"
+            >
+              ↓
+            </button>
+            <div></div>
+          </div>
+        </>
+      )}
+  
       {status !== "playing" && (
         <div className="text-center">
           <h1 className="text-4xl font-bold">Welcome to LAMP Event</h1>
-          <p className="mt-4 text-xl"> IHC Bring Your Kid To Work Day</p>
+          <p className="mt-4 text-xl">
+            {status === "win" ? "You Win 🎉" : "You Lose 😢"}
+          </p>
         </div>
       )}
     </div>
