@@ -333,41 +333,6 @@ export default function PacmanPage() {
               className="max-w-full h-auto"
             />
           </div>
-
-          <div className="grid grid-cols-3 gap-2 mt-2 md:hidden">
-            <div></div>
-            <button
-              onClick={() => sendDirection("ArrowUp")}
-              className="bg-white text-black px-4 py-2 rounded"
-            >
-              ↑
-            </button>
-            <div></div>
-
-            <button
-              onClick={() => sendDirection("ArrowLeft")}
-              className="bg-white text-black px-4 py-2 rounded"
-            >
-              ←
-            </button>
-            <div></div>
-
-            <button
-              onClick={() => sendDirection("ArrowRight")}
-              className="bg-white text-black px-4 py-2 rounded"
-            >
-              →
-            </button>
-
-            <div></div>
-            <button
-              onClick={() => sendDirection("ArrowDown")}
-              className="bg-white text-black px-4 py-2 rounded"
-            >
-              ↓
-            </button>
-            <div></div>
-          </div>
         </>
       ) : (
         <div className="text-center">
