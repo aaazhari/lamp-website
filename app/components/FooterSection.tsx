@@ -31,6 +31,13 @@ export default function FooterSection() {
                 +966 50 003 2297
               </a>
             </div>
+            <div>
+            <a href="/pacman">
+  <button className="mt-2 px-6 py-2 border border-white text-white rounded-lg hover:bg-white hover:text-black transition">
+    Play Game
+  </button>
+</a>
+            </div>
           </div>
   
           {/* Middle */}
