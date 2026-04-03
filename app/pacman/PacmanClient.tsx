@@ -67,6 +67,17 @@ export default function PacmanPage() {
         }
       }).catch(() => {});
     }
+
+    if (loseSoundRef.current) {
+      loseSoundRef.current.volume = 0;
+      loseSoundRef.current.play().then(() => {
+        if (loseSoundRef.current) {
+          loseSoundRef.current.pause();
+          loseSoundRef.current.currentTime = 0;
+          loseSoundRef.current.volume = 0.8;
+        }
+      }).catch(() => {});
+    }
     
   }
   
