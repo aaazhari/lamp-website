@@ -39,6 +39,7 @@ export default function PacmanPage() {
   const startSoundRef = useRef<HTMLAudioElement | null>(null);
   const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
   const winSoundRef = useRef<HTMLAudioElement | null>(null);
+  const loseSoundRef = useRef<HTMLAudioElement | null>(null);
   const [hideText, setHideText] = useState(false);
   const wakaPoolRef = useRef<HTMLAudioElement[]>([]);
   const wakaIndexRef = useRef(0);
@@ -94,6 +95,12 @@ export default function PacmanPage() {
       winSoundRef.current = new Audio("/pacman-win.mp3");
       winSoundRef.current.preload = "auto";
       winSoundRef.current.volume = 0.8;
+    }
+
+    if (!loseSoundRef.current) {
+      loseSoundRef.current = new Audio("/pacman-lose.mp3");
+      loseSoundRef.current.preload = "auto";
+      loseSoundRef.current.volume = 0.8;
     }
     
     if (status !== "playing") return;
@@ -312,6 +319,18 @@ export default function PacmanPage() {
       );
 
       if (hitGhost) {
+        // 🔴 stop waka sounds
+        wakaPoolRef.current.forEach(a => {
+          a.pause();
+          a.currentTime = 0;
+        });
+      
+        // 🔴 play lose sound
+        if (loseSoundRef.current && hasStartedSound.current) {
+          loseSoundRef.current.currentTime = 0;
+          loseSoundRef.current.play().catch(() => {});
+        }
+      
         setStatus("lose");
         return true;
       }
@@ -439,10 +458,27 @@ export default function PacmanPage() {
 )*/}
         </>
       ) : (
-        <div className="text-center">
-          <h1 className="text-4xl font-bold">Welcome to LAMP Event</h1>
-          <p className="mt-4 text-xl">IHC Bring Your Kid To Work Day</p>
-        </div>
+            <div className="flex items-center justify-center w-full h-full">
+              <div className="
+                relative
+                w-full 
+                max-w-[90vw] 
+                max-h-[85vh] 
+                aspect-[3/4]
+                border-4 border-blue-500 
+                rounded-2xl 
+                shadow-[0_0_30px_rgba(59,130,246,0.9)]
+                animate-pulse
+                overflow-hidden
+                bg-black
+              ">
+                <img
+                  src="/invitation.png"
+                  alt="Invitation"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
       )}
     </div>
   );
