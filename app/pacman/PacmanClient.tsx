@@ -413,7 +413,10 @@ export default function PacmanPage() {
           </div>
           {!hideText && (
   <p
-    onClick={() => setHideText(true)}
+    onClick={() => {
+      setHideText(true);
+      playStartSoundOnce();
+    }}
     className="mt-4 text-sm text-gray-400 cursor-pointer"
   >
     Click here to start
