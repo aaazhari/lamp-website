@@ -36,6 +36,8 @@ export default function PacmanPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [status, setStatus] = useState<Status>("playing");
   const hasStartedSound = useRef(false);
+  const startSoundRef = useRef<HTMLAudioElement | null>(null);
+  const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
 
 
   function playStartSoundOnce() {
@@ -43,13 +45,36 @@ export default function PacmanPage() {
   
     hasStartedSound.current = true;
   
-    const start = new Audio("/pacman-start.mp3");
-    start.volume = 0.8;
-    start.play().catch(() => {});
+    if (startSoundRef.current) {
+      startSoundRef.current.currentTime = 0;
+      startSoundRef.current.volume = 0.8;
+      startSoundRef.current.play().catch(() => {});
+    }
+  
+    if (wakaSoundRef.current) {
+      wakaSoundRef.current.volume = 0;
+      wakaSoundRef.current.play().then(() => {
+        if (wakaSoundRef.current) {
+          wakaSoundRef.current.pause();
+          wakaSoundRef.current.currentTime = 0;
+          wakaSoundRef.current.volume = 0.5;
+        }
+      }).catch(() => {});
+    }
   }
   
   useEffect(() => {
-if (status !== "playing") return;
+    if (!startSoundRef.current) {
+      startSoundRef.current = new Audio("/pacman-start.mp3");
+      startSoundRef.current.preload = "auto";
+    }
+    
+    if (!wakaSoundRef.current) {
+      wakaSoundRef.current = new Audio("/pacman-waka.mp3");
+      wakaSoundRef.current.preload = "auto";
+      wakaSoundRef.current.volume = 0.5;
+    }
+    if (status !== "playing") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -205,10 +230,13 @@ if (status !== "playing") return;
     
       if (dots.has(key)) {
         dots.delete(key);
-    
-        const waka = new Audio("/pacman-waka.mp3");
-        waka.volume = 0.5;
-        waka.play().catch(() => {});
+      
+        if (wakaSoundRef.current && hasStartedSound.current) {
+          wakaSoundRef.current.pause();
+          wakaSoundRef.current.currentTime = 0;
+          wakaSoundRef.current.volume = 0.5;
+          wakaSoundRef.current.play().catch(() => {});
+        }
       }
     }
 
