@@ -1,25 +1,4 @@
 "use client";
-export const metadata = {
-    title: "Bring Your Kid To Work Day Invitation",
-    description: "Join us for a special experience with LAMP Event",
-    openGraph: {
-      title: "Bring Your Kid To Work Day Invitation",
-      description: "Join us for a special experience with LAMP Event",
-      url: "https://lampevent.com/pacman",
-      siteName: "LAMP Event",
-      images: [
-        {
-          url: "https://lampevent.com/ihc-invitation.png",
-          width: 1200,
-          height: 630,
-        },
-      ],
-      type: "website",
-    },
-  };
-
-
-
 import { useEffect, useRef, useState } from "react";
 
 const CELL = 24;
@@ -56,10 +35,21 @@ type Ghost = {
 export default function PacmanPage() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [status, setStatus] = useState<Status>("playing");
+  const hasStartedSound = useRef(false);
 
+
+  function playStartSoundOnce() {
+    if (hasStartedSound.current) return;
+  
+    hasStartedSound.current = true;
+  
+    const start = new Audio("/pacman-start.mp3");
+    start.volume = 0.8;
+    start.play().catch(() => {});
+  }
+  
   useEffect(() => {
-    if (status !== "playing") return;
-
+if (status !== "playing") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -89,8 +79,6 @@ export default function PacmanPage() {
         }
       }
     }
-
-    dots.delete(`${pacman.x},${pacman.y}`);
 
     function isWall(x: number, y: number) {
       if (x < 0 || x >= COLS || y < 0 || y >= ROWS) return true;
@@ -207,13 +195,21 @@ export default function PacmanPage() {
       ) {
         direction = nextDirection;
       }
-
+    
       if (canMove(pacman.x, pacman.y, direction)) {
         const next = getNextPosition(pacman.x, pacman.y, direction);
         pacman = next;
       }
-
-      dots.delete(`${pacman.x},${pacman.y}`);
+    
+      const key = `${pacman.x},${pacman.y}`;
+    
+      if (dots.has(key)) {
+        dots.delete(key);
+    
+        const waka = new Audio("/pacman-waka.mp3");
+        waka.volume = 0.5;
+        waka.play().catch(() => {});
+      }
     }
 
     let ghostMoveCounter = 0;
@@ -293,6 +289,7 @@ export default function PacmanPage() {
     }
 
     function handleKey(e: KeyboardEvent) {
+      playStartSoundOnce();
       if (e.key === "ArrowUp") nextDirection = "up";
       if (e.key === "ArrowDown") nextDirection = "down";
       if (e.key === "ArrowLeft") nextDirection = "left";
@@ -309,6 +306,7 @@ export default function PacmanPage() {
     }
 
     function handleTouchEnd(e: TouchEvent) {
+      playStartSoundOnce();
       const touch = e.changedTouches[0];
       const dx = touch.clientX - touchStartX;
       const dy = touch.clientY - touchStartY;
@@ -335,7 +333,7 @@ export default function PacmanPage() {
       window.removeEventListener("touchend", handleTouchEnd);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [status]);
+  }, [status]); //[status, gameStarted]);
 
   function sendDirection(key: string) {
     window.dispatchEvent(new KeyboardEvent("keydown", { key }));
