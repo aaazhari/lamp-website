@@ -353,13 +353,13 @@ export default function PacmanPage() {
 
     function handleTouchStart(e: TouchEvent) {
       setHideText(true);
+      playStartSoundOnce();
       const touch = e.touches[0];
       touchStartX = touch.clientX;
       touchStartY = touch.clientY;
     }
 
     function handleTouchEnd(e: TouchEvent) {
-      playStartSoundOnce();
       const touch = e.changedTouches[0];
       const dx = touch.clientX - touchStartX;
       const dy = touch.clientY - touchStartY;
