@@ -103,7 +103,6 @@ export default function PacmanPage() {
 
 
   useEffect(() => {
-    trackEvent("debug_loaded");
     if (wakaPoolRef.current.length === 0) {
       wakaPoolRef.current = Array.from({ length: 4 }, () => {
         const audio = new Audio("/pacman-waka.mp3");
