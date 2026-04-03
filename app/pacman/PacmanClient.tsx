@@ -41,6 +41,7 @@ export default function PacmanPage() {
   const [hideText, setHideText] = useState(false);
   const wakaPoolRef = useRef<HTMLAudioElement[]>([]);
   const wakaIndexRef = useRef(0);
+  const lastWakaTimeRef = useRef(0);
 
 
   function playStartSoundOnce() {
@@ -241,17 +242,25 @@ export default function PacmanPage() {
       const key = `${pacman.x},${pacman.y}`;
     
       if (dots.has(key)) {
-  dots.delete(key);
-
-  if (hasStartedSound.current && wakaPoolRef.current.length > 0) {
-    const waka = wakaPoolRef.current[wakaIndexRef.current];
-    waka.currentTime = 0;
-    waka.play().catch(() => {});
-
-    wakaIndexRef.current =
-      (wakaIndexRef.current + 1) % wakaPoolRef.current.length;
-  }
-}
+        dots.delete(key);
+      
+        const now = Date.now();
+      
+        if (
+          hasStartedSound.current &&
+          wakaPoolRef.current.length > 0 &&
+          now - lastWakaTimeRef.current > 120
+        ) {
+          const waka = wakaPoolRef.current[wakaIndexRef.current];
+          waka.currentTime = 0;
+          waka.play().catch(() => {});
+      
+          wakaIndexRef.current =
+            (wakaIndexRef.current + 1) % wakaPoolRef.current.length;
+      
+          lastWakaTimeRef.current = now;
+        }
+      }
     }
 
     let ghostMoveCounter = 0;
