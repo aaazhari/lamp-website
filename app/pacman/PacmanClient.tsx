@@ -38,6 +38,7 @@ export default function PacmanPage() {
   const hasStartedSound = useRef(false);
   const startSoundRef = useRef<HTMLAudioElement | null>(null);
   const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
+  const [hideText, setHideText] = useState(false);
 
 
   function playStartSoundOnce() {
@@ -318,6 +319,7 @@ export default function PacmanPage() {
 
     function handleKey(e: KeyboardEvent) {
       playStartSoundOnce();
+      setHideText(true);
       if (e.key === "ArrowUp") nextDirection = "up";
       if (e.key === "ArrowDown") nextDirection = "down";
       if (e.key === "ArrowLeft") nextDirection = "left";
@@ -328,6 +330,7 @@ export default function PacmanPage() {
     let touchStartY = 0;
 
     function handleTouchStart(e: TouchEvent) {
+      setHideText(true);
       const touch = e.touches[0];
       touchStartX = touch.clientX;
       touchStartY = touch.clientY;
@@ -359,8 +362,15 @@ export default function PacmanPage() {
       window.removeEventListener("keydown", handleKey);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationFrameId);
     };
+
+    function handleClick() {
+      setHideText(true);
+    }
+    
+    window.addEventListener("click", handleClick);
   }, [status]); //[status, gameStarted]);
 
   function sendDirection(key: string) {
@@ -368,7 +378,7 @@ export default function PacmanPage() {
   }
 
   return (
-    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-4 p-4">
+    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-start gap-4 p-4 pt-10">
       {status === "playing" ? (
         <>
           <div className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)]">
@@ -379,6 +389,14 @@ export default function PacmanPage() {
               className="max-w-full h-auto"
             />
           </div>
+          {!hideText && (
+  <p
+    onClick={() => setHideText(true)}
+    className="mt-4 text-sm text-gray-400 cursor-pointer"
+  >
+    Click here to start
+  </p>
+)}
         </>
       ) : (
         <div className="text-center">
