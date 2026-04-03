@@ -411,7 +411,7 @@ export default function PacmanPage() {
               className="max-w-full h-auto"
             />
           </div>
-          {!hideText && (
+          {/*!hideText && (
   <p
     onClick={() => {
       setHideText(true);
@@ -421,7 +421,7 @@ export default function PacmanPage() {
   >
     Click here to start
   </p>
-)}
+)*/}
         </>
       ) : (
         <div className="text-center">
