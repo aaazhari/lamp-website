@@ -39,6 +39,8 @@ export default function PacmanPage() {
   const startSoundRef = useRef<HTMLAudioElement | null>(null);
   const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
   const [hideText, setHideText] = useState(false);
+  const wakaPoolRef = useRef<HTMLAudioElement[]>([]);
+  const wakaIndexRef = useRef(0);
 
 
   function playStartSoundOnce() {
@@ -65,6 +67,15 @@ export default function PacmanPage() {
   }
   
   useEffect(() => {
+    if (wakaPoolRef.current.length === 0) {
+      wakaPoolRef.current = Array.from({ length: 4 }, () => {
+        const audio = new Audio("/pacman-waka.mp3");
+        audio.preload = "auto";
+        audio.volume = 0.5;
+        return audio;
+      });
+    }
+
     if (!startSoundRef.current) {
       startSoundRef.current = new Audio("/pacman-start.mp3");
       startSoundRef.current.preload = "auto";
@@ -230,15 +241,17 @@ export default function PacmanPage() {
       const key = `${pacman.x},${pacman.y}`;
     
       if (dots.has(key)) {
-        dots.delete(key);
-      
-        if (wakaSoundRef.current && hasStartedSound.current) {
-          wakaSoundRef.current.pause();
-          wakaSoundRef.current.currentTime = 0;
-          wakaSoundRef.current.volume = 0.5;
-          wakaSoundRef.current.play().catch(() => {});
-        }
-      }
+  dots.delete(key);
+
+  if (hasStartedSound.current && wakaPoolRef.current.length > 0) {
+    const waka = wakaPoolRef.current[wakaIndexRef.current];
+    waka.currentTime = 0;
+    waka.play().catch(() => {});
+
+    wakaIndexRef.current =
+      (wakaIndexRef.current + 1) % wakaPoolRef.current.length;
+  }
+}
     }
 
     let ghostMoveCounter = 0;
