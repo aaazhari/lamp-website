@@ -54,12 +54,12 @@ export default function PacmanPage() {
       dataLayer?: Array<Record<string, unknown>>;
     };
   
-    if (Array.isArray(win.dataLayer)) {
-      win.dataLayer.push({
-        event: eventName,
-        ...data,
-      });
-    }
+    win.dataLayer = win.dataLayer || [];
+  
+    win.dataLayer.push({
+      event: eventName,
+      ...data,
+    });
   }
 
   function playStartSoundOnce() {
@@ -103,6 +103,7 @@ export default function PacmanPage() {
 
 
   useEffect(() => {
+    trackEvent("debug_loaded");
     if (wakaPoolRef.current.length === 0) {
       wakaPoolRef.current = Array.from({ length: 4 }, () => {
         const audio = new Audio("/pacman-waka.mp3");
@@ -382,7 +383,7 @@ export default function PacmanPage() {
         gameEndedRef.current = true;
 
         trackEvent("game_win");
-        
+
         if (gameStartTimeRef.current) {
           const seconds = Math.floor((Date.now() - gameStartTimeRef.current) / 1000);
         
