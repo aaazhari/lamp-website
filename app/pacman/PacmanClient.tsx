@@ -249,7 +249,7 @@ export default function PacmanPage() {
         if (
           hasStartedSound.current &&
           wakaPoolRef.current.length > 0 &&
-          now - lastWakaTimeRef.current > 150
+          now - lastWakaTimeRef.current > 250
         ) {
           const waka = wakaPoolRef.current[wakaIndexRef.current];
           waka.currentTime = 0;
