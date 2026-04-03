@@ -33,6 +33,8 @@ type Ghost = {
 };
 
 export default function PacmanPage() {
+  const gameStartTimeRef = useRef<number | null>(null);
+  const gameEndedRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [status, setStatus] = useState<Status>("playing");
   const hasStartedSound = useRef(false);
@@ -45,10 +47,27 @@ export default function PacmanPage() {
   const wakaIndexRef = useRef(0);
   const lastWakaTimeRef = useRef(0);
 
+  function trackEvent(eventName: string, data: Record<string, unknown> = {}) {
+    if (typeof window === "undefined") return;
+  
+    const win = window as Window & {
+      dataLayer?: Array<Record<string, unknown>>;
+    };
+  
+    if (Array.isArray(win.dataLayer)) {
+      win.dataLayer.push({
+        event: eventName,
+        ...data,
+      });
+    }
+  }
 
   function playStartSoundOnce() {
+    gameEndedRef.current = false;
     if (hasStartedSound.current) return;
-  
+    trackEvent("first_interaction");
+    trackEvent("game_start");
+    gameStartTimeRef.current = Date.now();
     hasStartedSound.current = true;
   
     if (startSoundRef.current) {
@@ -81,6 +100,8 @@ export default function PacmanPage() {
     
   }
   
+
+
   useEffect(() => {
     if (wakaPoolRef.current.length === 0) {
       wakaPoolRef.current = Array.from({ length: 4 }, () => {
@@ -330,6 +351,16 @@ export default function PacmanPage() {
       );
 
       if (hitGhost) {
+        if (gameEndedRef.current) return true;
+        gameEndedRef.current = true;
+
+        trackEvent("game_lose");
+
+        if (gameStartTimeRef.current) {
+          const seconds = Math.floor((Date.now() - gameStartTimeRef.current) / 1000);
+        
+          trackEvent("time_spent", { seconds });
+        }
         // 🔴 stop waka sounds
         wakaPoolRef.current.forEach(a => {
           a.pause();
@@ -347,6 +378,16 @@ export default function PacmanPage() {
       }
 
       if (dots.size === 0) {
+        if (gameEndedRef.current) return true;
+        gameEndedRef.current = true;
+
+        trackEvent("game_win");
+        
+        if (gameStartTimeRef.current) {
+          const seconds = Math.floor((Date.now() - gameStartTimeRef.current) / 1000);
+        
+          trackEvent("time_spent", { seconds });
+        }
         // 🔴 STOP all waka sounds first
         wakaPoolRef.current.forEach(a => {
           a.pause();
