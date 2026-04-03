@@ -38,6 +38,7 @@ export default function PacmanPage() {
   const hasStartedSound = useRef(false);
   const startSoundRef = useRef<HTMLAudioElement | null>(null);
   const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
+  const winSoundRef = useRef<HTMLAudioElement | null>(null);
   const [hideText, setHideText] = useState(false);
   const wakaPoolRef = useRef<HTMLAudioElement[]>([]);
   const wakaIndexRef = useRef(0);
@@ -65,6 +66,7 @@ export default function PacmanPage() {
         }
       }).catch(() => {});
     }
+    
   }
   
   useEffect(() => {
@@ -87,6 +89,13 @@ export default function PacmanPage() {
       wakaSoundRef.current.preload = "auto";
       wakaSoundRef.current.volume = 0.5;
     }
+    
+    if (!winSoundRef.current) {
+      winSoundRef.current = new Audio("/pacman-win.mp3");
+      winSoundRef.current.preload = "auto";
+      winSoundRef.current.volume = 0.8;
+    }
+    
     if (status !== "playing") return;
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -308,6 +317,18 @@ export default function PacmanPage() {
       }
 
       if (dots.size === 0) {
+        // 🔴 STOP all waka sounds first
+        wakaPoolRef.current.forEach(a => {
+          a.pause();
+          a.currentTime = 0;
+        });
+      
+        // 🟢 THEN play win sound
+        if (winSoundRef.current && hasStartedSound.current) {
+          winSoundRef.current.currentTime = 0;
+          winSoundRef.current.play().catch(() => {});
+        }
+      
         setStatus("win");
         return true;
       }
@@ -384,15 +405,9 @@ export default function PacmanPage() {
       window.removeEventListener("keydown", handleKey);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("click", handleClick);
       cancelAnimationFrame(animationFrameId);
     };
 
-    function handleClick() {
-      setHideText(true);
-    }
-    
-    window.addEventListener("click", handleClick);
   }, [status]); //[status, gameStarted]);
 
   function sendDirection(key: string) {
