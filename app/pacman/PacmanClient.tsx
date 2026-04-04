@@ -486,7 +486,7 @@ export default function PacmanPage() {
   }
 
   return (
-    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-start gap-4 p-4 pt-10">
+    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-4 p-4">
       {status === "playing" ? (
         <>
           <div className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)]">
