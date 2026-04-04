@@ -316,33 +316,66 @@ export default function PacmanPage() {
 
     function moveGhosts() {
       ghostMoveCounter++;
-
+    
       if (ghostMoveCounter % ghostSpeed !== 0) return;
-
-      ghosts = ghosts.map((ghost) => {
+    
+      const nextGhosts: Ghost[] = [];
+    
+      ghosts.forEach((ghost, index) => {
         const ghostDirections: Direction[] = ["left", "right", "up", "down"];
-
-        const possibleDirections = ghostDirections.filter((dir) =>
-          canMove(ghost.x, ghost.y, dir)
-        );
-
-        if (possibleDirections.length === 0) return ghost;
-
+    
+        const possibleDirections = ghostDirections.filter((dir) => {
+          if (!canMove(ghost.x, ghost.y, dir)) return false;
+    
+          const next = getNextPosition(ghost.x, ghost.y, dir);
+    
+          const occupiedByCurrentGhosts = ghosts.some(
+            (otherGhost, otherIndex) =>
+              otherIndex !== index &&
+              otherGhost.x === next.x &&
+              otherGhost.y === next.y
+          );
+    
+          const occupiedByNextGhosts = nextGhosts.some(
+            (nextGhost) => nextGhost.x === next.x && nextGhost.y === next.y
+          );
+    
+          return !occupiedByCurrentGhosts && !occupiedByNextGhosts;
+        });
+    
+        if (possibleDirections.length === 0) {
+          nextGhosts.push(ghost);
+          return;
+        }
+    
         const bestDirection = possibleDirections.sort((a, b) => {
           const nextA = getNextPosition(ghost.x, ghost.y, a);
           const nextB = getNextPosition(ghost.x, ghost.y, b);
-
-          const distA =
-            Math.abs(nextA.x - pacman.x) + Math.abs(nextA.y - pacman.y);
-          const distB =
-            Math.abs(nextB.x - pacman.x) + Math.abs(nextB.y - pacman.y);
-
+    
+          let distA = 0;
+          let distB = 0;
+    
+          // Ghost 1 = chaser
+          if (index === 0) {
+            distA = Math.abs(nextA.x - pacman.x) + Math.abs(nextA.y - pacman.y);
+            distB = Math.abs(nextB.x - pacman.x) + Math.abs(nextB.y - pacman.y);
+            return distA - distB;
+          }
+    
+          // Ghost 2 = ambusher / less direct
+          const targetX = pacman.x + (direction === "right" ? 2 : direction === "left" ? -2 : 0);
+          const targetY = pacman.y + (direction === "down" ? 2 : direction === "up" ? -2 : 0);
+    
+          distA = Math.abs(nextA.x - targetX) + Math.abs(nextA.y - targetY);
+          distB = Math.abs(nextB.x - targetX) + Math.abs(nextB.y - targetY);
           return distA - distB;
         })[0];
-
+    
         const next = getNextPosition(ghost.x, ghost.y, bestDirection);
-        return { ...ghost, x: next.x, y: next.y };
+        nextGhosts.push({ ...ghost, x: next.x, y: next.y });
       });
+    
+      ghosts = nextGhosts;
     }
 
     function checkCollisions() {
