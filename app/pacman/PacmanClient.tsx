@@ -575,7 +575,7 @@ useEffect(() => {
               width: boardWidth,
               height:
                 typeof window !== "undefined" && window.innerWidth < 768
-                  ? boardHeight * 1.35
+                  ? boardHeight * 1.55
                   : boardHeight,
             }}
           />
