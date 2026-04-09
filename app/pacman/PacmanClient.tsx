@@ -559,10 +559,13 @@ useEffect(() => {
     <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-2 px-1 py-0 md:gap-4 md:p-4">
       {status === "playing" ? (
         <>
-          <div
-  className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)]"
-  style={{ width: boardWidth + 16 }}
->
+        <div
+          className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)] origin-center md:scale-100"
+          style={{
+            width: boardWidth + 16,
+            transform: typeof window !== "undefined" && window.innerWidth < 768 ? "scaleY(1.18)" : "scale(1)",
+          }}
+        >
             <canvas
               ref={canvasRef}
               width={boardWidth}
