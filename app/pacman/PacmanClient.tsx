@@ -567,11 +567,18 @@ useEffect(() => {
           }}
         >
             <canvas
-              ref={canvasRef}
-              width={boardWidth}
-              height={boardHeight}
-              className="max-w-full h-auto"
-            />
+            ref={canvasRef}
+            width={boardWidth}
+            height={boardHeight}
+            className="block"
+            style={{
+              width: boardWidth,
+              height:
+                typeof window !== "undefined" && window.innerWidth < 768
+                  ? boardHeight * 1.35
+                  : boardHeight,
+            }}
+          />
           </div>
           {/*!hideText && (
   <p
