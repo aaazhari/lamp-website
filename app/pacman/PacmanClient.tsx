@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-const CELL = 24;
+//const CELL = 24;
 const ROWS = 15;
 const COLS = 19;
 
@@ -33,6 +33,9 @@ type Ghost = {
 };
 
 export default function PacmanPage() {
+  const [cell, setCell] = useState(24);
+  const [boardWidth, setBoardWidth] = useState(COLS * 24);
+  const [boardHeight, setBoardHeight] = useState(ROWS * 24);
   const gameStartTimeRef = useRef<number | null>(null);
   const gameEndedRef = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -100,6 +103,33 @@ export default function PacmanPage() {
     
   }
   
+
+useEffect(() => {
+  function updateBoardSize() {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const horizontalPadding = 32;
+    const verticalPadding = 80;
+
+    const maxCellByWidth = Math.floor((viewportWidth - horizontalPadding) / COLS);
+    const maxCellByHeight = Math.floor((viewportHeight - verticalPadding) / ROWS);
+
+    const nextCell = Math.max(18, Math.min(maxCellByWidth, maxCellByHeight, 34));
+
+    setCell(nextCell);
+    const exactWidth = nextCell * COLS;
+    const exactHeight = nextCell * ROWS;
+    
+    setBoardWidth(exactWidth);
+    setBoardHeight(exactHeight);
+  }
+
+  updateBoardSize();
+  window.addEventListener("resize", updateBoardSize);
+
+  return () => window.removeEventListener("resize", updateBoardSize);
+}, []);
 
 
   useEffect(() => {
@@ -195,7 +225,7 @@ export default function PacmanPage() {
       for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
           if (MAZE[y][x] === "#") {
-            ctx.strokeRect(x * CELL + 2, y * CELL + 2, CELL - 4, CELL - 4);
+            ctx.strokeRect(x * cell + 2, y * cell + 2, cell - 4, cell - 4);
           }
         }
       }
@@ -209,9 +239,9 @@ export default function PacmanPage() {
         ctx.beginPath();
         ctx.fillStyle = "#f5d0c5";
         ctx.arc(
-          x * CELL + CELL / 2,
-          y * CELL + CELL / 2,
-          char === "o" ? 5 : 2.5,
+          x * cell + cell / 2,
+          y * cell + cell / 2,
+          char === "o" ? Math.max(4, cell * 0.2) : Math.max(2, cell * 0.1),
           0,
           Math.PI * 2
         );
@@ -228,8 +258,8 @@ export default function PacmanPage() {
     }
 
     function drawPacman() {
-      const px = pacman.x * CELL + CELL / 2;
-      const py = pacman.y * CELL + CELL / 2;
+      const px = pacman.x * cell + cell / 2;
+      const py = pacman.y * cell + cell / 2;
       const angle = getPacmanAngle();
 
       ctx.fillStyle = "#fde047";
@@ -238,7 +268,7 @@ export default function PacmanPage() {
       ctx.arc(
         px,
         py,
-        CELL / 2 - 3,
+        cell / 2 - 3,
         angle + mouthOpen,
         angle + Math.PI * 2 - mouthOpen
       );
@@ -253,24 +283,28 @@ export default function PacmanPage() {
     }
 
     function drawGhost(ghost: Ghost) {
-      const gx = ghost.x * CELL + CELL / 2;
-      const gy = ghost.y * CELL + CELL / 2;
+      const gx = ghost.x * cell + cell / 2;
+      const gy = ghost.y * cell + cell / 2;
 
       ctx.fillStyle = ghost.color;
       ctx.beginPath();
-      ctx.arc(gx, gy - 2, 8, Math.PI, 0);
-      ctx.lineTo(gx + 8, gy + 8);
-      ctx.lineTo(gx + 4, gy + 4);
-      ctx.lineTo(gx, gy + 8);
-      ctx.lineTo(gx - 4, gy + 4);
-      ctx.lineTo(gx - 8, gy + 8);
+      const ghostRadius = Math.max(7, cell * 0.33);
+      ctx.arc(gx, gy - 2, ghostRadius, Math.PI, 0);
+      ctx.lineTo(gx + ghostRadius, gy + ghostRadius);
+      ctx.lineTo(gx + ghostRadius / 2, gy + ghostRadius / 2);
+      ctx.lineTo(gx, gy + ghostRadius);
+      ctx.lineTo(gx - ghostRadius / 2, gy + ghostRadius / 2);
+      ctx.lineTo(gx - ghostRadius, gy + ghostRadius);
       ctx.closePath();
       ctx.fill();
 
       ctx.fillStyle = "#ffffff";
       ctx.beginPath();
-      ctx.arc(gx - 3, gy - 2, 2, 0, Math.PI * 2);
-      ctx.arc(gx + 3, gy - 2, 2, 0, Math.PI * 2);
+      const eyeOffset = Math.max(3, cell * 0.12);
+      const eyeRadius = Math.max(2, cell * 0.08);
+      
+      ctx.arc(gx - eyeOffset, gy - 2, eyeRadius, 0, Math.PI * 2);
+      ctx.arc(gx + eyeOffset, gy - 2, eyeRadius, 0, Math.PI * 2);
       ctx.fill();
     }
 
@@ -512,7 +546,7 @@ export default function PacmanPage() {
       cancelAnimationFrame(animationFrameId);
     };
 
-  }, [status]); //[status, gameStarted]);
+  }, [status, cell]);
 
   function sendDirection(key: string) {
     window.dispatchEvent(new KeyboardEvent("keydown", { key }));
@@ -522,11 +556,14 @@ export default function PacmanPage() {
     <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-4 p-4">
       {status === "playing" ? (
         <>
-          <div className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)]">
+          <div
+  className="border-4 border-blue-600 p-2 rounded-xl bg-black shadow-[0_0_25px_rgba(37,99,235,0.25)]"
+  style={{ width: boardWidth + 16 }}
+>
             <canvas
               ref={canvasRef}
-              width={COLS * CELL}
-              height={ROWS * CELL}
+              width={boardWidth}
+              height={boardHeight}
               className="max-w-full h-auto"
             />
           </div>
