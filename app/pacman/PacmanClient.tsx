@@ -556,7 +556,7 @@ useEffect(() => {
   }
 
   return (
-    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-4 p-4">
+    <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-2 px-1 py-0 md:gap-4 md:p-4">
       {status === "playing" ? (
         <>
           <div
