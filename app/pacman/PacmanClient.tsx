@@ -115,7 +115,10 @@ useEffect(() => {
     const maxCellByWidth = Math.floor((viewportWidth - horizontalPadding) / COLS);
     const maxCellByHeight = Math.floor((viewportHeight - verticalPadding) / ROWS);
 
-    const nextCell = Math.max(18, Math.min(maxCellByWidth, maxCellByHeight, 34));
+    const isPhone = window.innerWidth < 768;
+    const nextCell = isPhone
+    ? Math.max(18, Math.min(maxCellByWidth, 42))
+    : Math.max(18, Math.min(maxCellByWidth, maxCellByHeight, 34));
 
     setCell(nextCell);
     const exactWidth = nextCell * COLS;
