@@ -109,8 +109,8 @@ useEffect(() => {
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    const horizontalPadding = 32;
-    const verticalPadding = 80;
+    const horizontalPadding = 8;
+    const verticalPadding = 40;
 
     const maxCellByWidth = Math.floor((viewportWidth - horizontalPadding) / COLS);
     const maxCellByHeight = Math.floor((viewportHeight - verticalPadding) / ROWS);
