@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-//const CELL = 24;
+import { trackEvent } from "../../../lib/analytics";
 const ROWS = 15;
 const COLS = 19;
 
@@ -45,25 +45,9 @@ export default function PacmanPage() {
   const wakaSoundRef = useRef<HTMLAudioElement | null>(null);
   const winSoundRef = useRef<HTMLAudioElement | null>(null);
   const loseSoundRef = useRef<HTMLAudioElement | null>(null);
-  const [hideText, setHideText] = useState(false);
   const wakaPoolRef = useRef<HTMLAudioElement[]>([]);
   const wakaIndexRef = useRef(0);
   const lastWakaTimeRef = useRef(0);
-
-  function trackEvent(eventName: string, data: Record<string, unknown> = {}) {
-    if (typeof window === "undefined") return;
-  
-    const win = window as Window & {
-      dataLayer?: Array<Record<string, unknown>>;
-    };
-  
-    win.dataLayer = win.dataLayer || [];
-  
-    win.dataLayer.push({
-      event: eventName,
-      ...data,
-    });
-  }
 
   function playStartSoundOnce() {
     gameEndedRef.current = false;
@@ -503,7 +487,6 @@ useEffect(() => {
 
     function handleKey(e: KeyboardEvent) {
       playStartSoundOnce();
-      setHideText(true);
       if (e.key === "ArrowUp") nextDirection = "up";
       if (e.key === "ArrowDown") nextDirection = "down";
       if (e.key === "ArrowLeft") nextDirection = "left";
@@ -514,7 +497,6 @@ useEffect(() => {
     let touchStartY = 0;
 
     function handleTouchStart(e: TouchEvent) {
-      setHideText(true);
       playStartSoundOnce();
       const touch = e.touches[0];
       touchStartX = touch.clientX;
@@ -550,10 +532,6 @@ useEffect(() => {
     };
 
   }, [status, cell]);
-
-  function sendDirection(key: string) {
-    window.dispatchEvent(new KeyboardEvent("keydown", { key }));
-  }
 
   return (
     <div className="fixed inset-0 overflow-hidden touch-none bg-black text-white flex flex-col items-center justify-center gap-2 px-1 py-0 md:gap-4 md:p-4">
