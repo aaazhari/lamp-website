@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Overdose Jeddah | Barista Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-container">
+
+    <!-- ═══ SUMMER ICON BACKGROUND ═══ -->
+    <div style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0;opacity:0.25;">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;" aria-hidden="true">
+        <defs>
+          <!-- Sun (yellow) -->
+          <g id="i-sun">
+            <circle cx="0" cy="0" r="8.5" fill="#FFE040"/>
+            <line x1="0" y1="-14" x2="0" y2="-11" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="0" y1="11" x2="0" y2="14" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="-14" y1="0" x2="-11" y2="0" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="11" y1="0" x2="14" y2="0" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="-9.9" y1="-9.9" x2="-7.8" y2="-7.8" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="7.8" y1="7.8" x2="9.9" y2="9.9" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="9.9" y1="-9.9" x2="7.8" y2="-7.8" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+            <line x1="-7.8" y1="7.8" x2="-9.9" y2="9.9" stroke="#FFE040" stroke-width="2.8" stroke-linecap="round"/>
+          </g>
+          <!-- Palm trees (pink/mauve) -->
+          <g id="i-palm">
+            <path d="M-1,12 Q3,5 0,-2" fill="none" stroke="#D4829E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0,-2 C-6,-8 -12,-4 -12,2" fill="none" stroke="#D4829E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0,-2 C6,-8 12,-4 12,2" fill="none" stroke="#D4829E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0,-2 C-3,-10 -9,-10 -10,-6" fill="none" stroke="#D4829E" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M0,-2 C3,-10 9,-10 10,-6" fill="none" stroke="#D4829E" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <!-- Waves (teal) -->
+          <g id="i-wave">
+            <path d="M-14,-5 C-10,-9 -6,-1 -2,-5 C2,-9 6,-1 10,-5 C12,-7 13,-6 14,-5" fill="none" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M-14,1 C-10,-3 -6,5 -2,1 C2,-3 6,5 10,1 C12,-1 13,0 14,1" fill="none" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M-14,7 C-10,3 -6,11 -2,7 C2,3 6,11 10,7 C12,5 13,6 14,7" fill="none" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <!-- Beach umbrella (teal) -->
+          <g id="i-umb">
+            <path d="M-12,0 A12,12 0 0,1 12,0" fill="none" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M-12,0 Q-6,-4 0,0 Q6,-4 12,0" fill="none" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="0" y1="0" x2="0" y2="14" stroke="#4DC8B4" stroke-width="2.5" stroke-linecap="round"/>
+          </g>
+          <!-- Flower/pinwheel (dark pink) -->
+          <g id="i-flower">
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(0)"/>
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(60)"/>
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(120)"/>
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(240)"/>
+            <ellipse cx="0" cy="-8.5" rx="3" ry="5" fill="#C2185B" transform="rotate(300)"/>
+            <circle cx="0" cy="0" r="4" fill="#C2185B"/>
+          </g>
+        </defs>
+
+        <!-- Row 1 -->
+        <use href="#i-sun"    transform="translate(43,44) scale(1.08)"/>
+        <use href="#i-palm"   transform="translate(118,52) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(203,41) scale(1.1)"/>
+        <use href="#i-umb"    transform="translate(296,48) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(385,43) scale(1.05)"/>
+        <use href="#i-sun"    transform="translate(453,56) scale(0.88)"/>
+        <!-- Row 2 -->
+        <use href="#i-flower" transform="translate(32,121) scale(0.92)"/>
+        <use href="#i-wave"   transform="translate(105,114) scale(1.1)"/>
+        <use href="#i-palm"   transform="translate(197,126) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(292,117) scale(1.02)"/>
+        <use href="#i-umb"    transform="translate(382,123) scale(1.05)"/>
+        <use href="#i-flower" transform="translate(450,110) scale(0.9)"/>
+        <!-- Row 3 -->
+        <use href="#i-umb"    transform="translate(44,199) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(140,207) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(232,194) scale(1.05)"/>
+        <use href="#i-wave"   transform="translate(328,204) scale(1.1)"/>
+        <use href="#i-palm"   transform="translate(418,197) scale(0.95)"/>
+        <!-- Row 4 -->
+        <use href="#i-wave"   transform="translate(30,277) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(116,284) scale(0.92)"/>
+        <use href="#i-umb"    transform="translate(212,274) scale(1.1)"/>
+        <use href="#i-flower" transform="translate(310,281) scale(1.0)"/>
+        <use href="#i-palm"   transform="translate(403,277) scale(1.02)"/>
+        <use href="#i-wave"   transform="translate(453,267) scale(0.88)"/>
+        <!-- Row 5 -->
+        <use href="#i-palm"   transform="translate(41,357) scale(1.0)"/>
+        <use href="#i-umb"    transform="translate(150,351) scale(0.97)"/>
+        <use href="#i-flower" transform="translate(244,359) scale(1.05)"/>
+        <use href="#i-sun"    transform="translate(341,349) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(432,357) scale(1.0)"/>
+        <!-- Row 6 -->
+        <use href="#i-sun"    transform="translate(34,434) scale(0.9)"/>
+        <use href="#i-flower" transform="translate(122,427) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(219,439) scale(1.1)"/>
+        <use href="#i-palm"   transform="translate(320,431) scale(1.0)"/>
+        <use href="#i-umb"    transform="translate(413,437) scale(0.95)"/>
+        <!-- Row 7 -->
+        <use href="#i-umb"    transform="translate(56,511) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(152,504) scale(0.92)"/>
+        <use href="#i-sun"    transform="translate(249,514) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(351,507) scale(1.05)"/>
+        <use href="#i-palm"   transform="translate(446,511) scale(0.9)"/>
+        <!-- Row 8 -->
+        <use href="#i-flower" transform="translate(37,589) scale(1.0)"/>
+        <use href="#i-palm"   transform="translate(134,581) scale(1.05)"/>
+        <use href="#i-umb"    transform="translate(234,591) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(332,584) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(426,589) scale(1.0)"/>
+        <!-- Row 9 -->
+        <use href="#i-wave"   transform="translate(49,667) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(146,659) scale(0.92)"/>
+        <use href="#i-flower" transform="translate(246,669) scale(1.0)"/>
+        <use href="#i-palm"   transform="translate(349,664) scale(1.05)"/>
+        <use href="#i-umb"    transform="translate(441,661) scale(0.95)"/>
+        <!-- Row 10 -->
+        <use href="#i-palm"   transform="translate(33,744) scale(0.9)"/>
+        <use href="#i-umb"    transform="translate(131,737) scale(1.0)"/>
+        <use href="#i-sun"    transform="translate(231,747) scale(1.05)"/>
+        <use href="#i-wave"   transform="translate(329,739) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(426,745) scale(1.0)"/>
+        <!-- Row 11 -->
+        <use href="#i-sun"    transform="translate(56,819) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(156,814) scale(1.0)"/>
+        <use href="#i-palm"   transform="translate(256,821) scale(0.95)"/>
+        <use href="#i-umb"    transform="translate(353,817) scale(1.0)"/>
+        <use href="#i-wave"   transform="translate(446,814) scale(1.05)"/>
+        <!-- Row 12 -->
+        <use href="#i-wave"   transform="translate(39,891) scale(1.0)"/>
+        <use href="#i-umb"    transform="translate(139,884) scale(0.9)"/>
+        <use href="#i-sun"    transform="translate(239,894) scale(1.0)"/>
+        <use href="#i-flower" transform="translate(339,887) scale(1.05)"/>
+        <use href="#i-palm"   transform="translate(433,891) scale(1.0)"/>
+      </svg>
+    </div>
+    <!-- ═══ END ICON BACKGROUND ═══ -->
+
+    <!-- 1. Grind Screen -->
+    <div class="screen active" id="screen-grind">
+        <div class="station-bg"></div><div class="station-counter"></div>
+        <div class="progress-hud">
+            <div class="hud-text">Grind the Beans</div>
+            <div class="progress-bar"><div class="progress-target" style="left: 78%; width: 16%;"></div><div class="progress-fill" id="grind-fill"></div></div>
+        </div>
+
+        <div class="grinder-station">
+            <div class="grind-hopper"><div class="grind-beans-bg" id="grind-beans-bg"></div></div>
+            <div class="grind-body-top"><div class="grind-display" id="grind-timer">0.0</div></div>
+            <div class="grind-body-mid">
+                <div class="grind-chute"></div><div class="grind-fall" id="grind-fall"></div>
+                <div class="grind-pf-container">
+                    <div class="grind-handle"></div>
+                    <div class="grind-pf-basket"><div class="grind-pile" id="grind-pile"></div></div>
+                </div>
+            </div>
+        </div>
+        <button class="power-btn state-off" id="btn-grind">
+            <div class="power-icon-circle">
+                <svg class="power-icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--white)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                </svg>
+            </div>
+            <span class="power-label" id="grind-label">OFF</span>
+        </button>
+    </div>
+
+    <!-- 2. Extract Screen -->
+    <div class="screen" id="screen-extract">
+        <div class="station-bg"></div><div class="station-counter"></div>
+        <div class="progress-hud">
+            <div class="hud-text" id="extract-hud-text">Pull the Shot</div>
+            <div class="progress-bar"><div class="progress-target" style="left: 65%; width: 25%;"></div><div class="progress-fill" id="extract-fill"></div></div>
+        </div>
+
+        <div class="machine-container">
+            <div class="machine-housing"></div>
+            <div class="machine-top-row">
+                <div class="machine-brand-pill">ESPRESSO</div>
+                <div class="machine-dials"><div class="machine-dial"></div><div class="machine-dial"></div></div>
+            </div>
+            <div class="machine-lower-face"></div>
+            <div class="wand-mount" style="left: 87%; top: 150px;"></div>
+            
+            <div class="group-unit">
+                <div class="group-head"></div>
+                <div class="pf-locked">
+                    <div class="pf-locked-handle"></div>
+                    <div class="pf-locked-basket"><div class="pf-locked-puck"></div></div>
+                    <div class="pf-spouts">
+                        <div class="pf-spout"><div class="spout-stream" id="stream"></div></div>
+                        <div class="pf-spout"><div class="spout-stream" id="stream-2"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="group-head-secondary"></div>
+            <div class="drip-platform">
+                <div class="demitasse">
+                    <div class="demitasse-cup"><div class="cup-coffee-fill" id="liquid"></div></div>
+                    <div class="demitasse-handle">
+                        <svg viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 4 8 C 26 4, 36 16, 36 25 C 36 34, 26 46, 4 42" fill="none" stroke="var(--outline)" stroke-width="18" stroke-linecap="round"/>
+                            <path d="M 4 8 C 26 4, 36 16, 36 25 C 36 34, 26 46, 4 42" fill="none" stroke="var(--white)" stroke-width="8" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="demitasse-saucer"></div>
+                </div>
+                <div class="drip-tray">
+                    <div class="drip-tray-slats">
+                        <div class="slat"></div><div class="slat"></div><div class="slat"></div>
+                        <div class="slat"></div><div class="slat"></div><div class="slat"></div>
+                        <div class="slat"></div><div class="slat"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="power-btn state-off" id="btn-extract">
+            <div class="power-icon-circle">
+                <svg class="power-icon-svg" viewBox="0 0 24 24" fill="none" stroke="var(--white)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="2" x2="12" y2="12"></line>
+                    <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                </svg>
+            </div>
+            <span class="power-label" id="extract-label">OFF</span>
+        </button>
+    </div>
+
+    <!-- 3. Steam Screen -->
+    <div class="screen" id="screen-steam">
+        <div class="station-bg"></div><div class="station-counter"></div>
+        <div class="progress-hud">
+            <div class="hud-text" id="steam-hud-text">Move the Pitcher Under the Wand</div>
+            <div class="progress-bar"><div class="progress-target" style="left: 65%; width: 10%;"></div><div class="progress-fill" id="temp-fill"></div></div>
+        </div>
+
+        <div class="steam-container" id="steam-container">
+            <div class="steam-panel"></div>
+            <div class="wand-mount"></div>
+            <div class="wand-target-zone"></div>
+            <div class="pitcher-drag-zone" id="pitcher-drag-zone">
+                <div class="pitcher-simple" id="pitcher-simple">
+                    <div class="heat-haze" id="heat-haze"></div>
+                    <div class="milk-fill" id="milk-surface"></div>
+                    <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="pg-body" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%"   stop-color="#8a9296"/><stop offset="22%"  stop-color="#b8c4c8"/><stop offset="45%"  stop-color="#dce8ec"/><stop offset="65%"  stop-color="#c0ccd0"/><stop offset="100%" stop-color="#7a8a8e"/>
+                        </linearGradient>
+                        <linearGradient id="pg-rim" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%"   stop-color="#9aa4a8"/><stop offset="50%"  stop-color="#e8f0f4"/><stop offset="100%" stop-color="#8a9296"/>
+                        </linearGradient>
+                        <linearGradient id="pg-milk" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%"   stop-color="#ffffff"/><stop offset="100%" stop-color="#f0ece0"/>
+                        </linearGradient>
+                        <clipPath id="pg-clip"><path d="M 34 50 Q 28 50 26 60 L 18 128 Q 16 144 70 146 Q 124 144 122 128 L 114 60 Q 112 50 106 50 Z"/></clipPath>
+                      </defs>
+                      <ellipse cx="70" cy="152" rx="52" ry="6" fill="rgba(61,43,31,0.2)"/>
+                      <path d="M 108 72 C 136 72, 142 84, 142 100 C 142 116, 136 130, 108 130" fill="none" stroke="#3D2B1F" stroke-width="14" stroke-linecap="round"/>
+                      <path d="M 108 72 C 134 72, 140 84, 140 100 C 140 116, 134 130, 108 130" fill="none" stroke="url(#pg-body)" stroke-width="9" stroke-linecap="round"/>
+                      <path d="M 108 76 C 130 78, 135 88, 135 100 C 135 112, 130 122, 108 126" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2.5" stroke-linecap="round"/>
+                      <path d="M 32 50 Q 24 50 22 62 L 14 130 Q 12 148 70 150 Q 128 148 126 130 L 118 62 Q 116 50 108 50 Z" fill="#3D2B1F"/>
+                      <path d="M 34 50 Q 28 50 26 60 L 18 128 Q 16 144 70 146 Q 124 144 122 128 L 114 60 Q 112 50 106 50 Z" fill="url(#pg-body)"/>
+                      <path d="M 40 52 Q 36 52 34 62 L 28 126 Q 27 140 38 143 L 40 143 Q 30 140 31 126 L 37 62 Q 39 53 42 52 Z" fill="rgba(255,255,255,0.12)"/>
+                      <rect id="pg-milk-rect-steam" x="20" y="72" width="100" height="74" fill="url(#pg-milk)" clip-path="url(#pg-clip)"/>
+                      <ellipse id="pg-foam-steam" cx="70" cy="72" rx="44" ry="9" fill="#faf6ee" opacity="0.9"/>
+                      <ellipse cx="58" cy="70" rx="12" ry="4" fill="rgba(255,255,255,0.7)"/>
+                      <ellipse cx="80" cy="71" rx="8"  ry="3" fill="rgba(255,255,255,0.5)"/>
+                      <g id="pg-bubbles"></g>
+                      <ellipse cx="70" cy="52" rx="42" ry="11" fill="#3D2B1F"/>
+                      <ellipse cx="70" cy="50" rx="40" ry="10" fill="url(#pg-rim)"/>
+                      <path d="M 30 50 Q 70 62 110 50 Q 110 56 70 68 Q 30 56 30 50 Z" fill="#5a6468" opacity="0.6"/>
+                      <ellipse cx="70" cy="50" rx="34" ry="8" fill="#1c2226"/>
+                      <path d="M 44 44 Q 70 38 96 44" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M 32 46 L 10 50 L 32 56 Z" fill="#3D2B1F"/>
+                      <path d="M 33 47 L 14 50 L 33 54 Z" fill="url(#pg-rim)"/>
+                      <path d="M 22 90  Q 70 98  118 90"  fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                      <path d="M 20 110 Q 70 118 120 110" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                      <path d="M 48 54 Q 46 80 46 110 Q 46 130 48 140" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Pouring Stage (Draggable) -->
+    <div class="screen" id="screen-pour">
+        <div class="station-bg"></div><div class="station-counter"></div>
+        <div class="progress-hud">
+            <div class="hud-text" id="pour-hud-text">Drag Pitcher to Pour</div>
+            <div class="progress-bar"><div class="progress-target" style="left: 70%; width: 25%;"></div><div class="progress-fill" id="pour-fill"></div></div>
+        </div>
+
+        <div class="art-layout">
+            <div class="coaster">
+                <div class="pour-demitasse-wrap">
+                    <div class="demitasse">
+                        <div class="demitasse-cup">
+                            <div class="cup-coffee-fill" id="pour-base-liquid">
+                                <svg class="pour-logo" viewBox="0 0 160 122" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+                                    <line x1="32" y1="23" x2="50" y2="23" stroke="#4A2C1A" stroke-width="2.5" stroke-linecap="round"/>
+                                    <text x="30" y="45" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="23" letter-spacing="3" fill="#4A2C1A">OV</text>
+                                    <text x="30" y="71" text-anchor="start" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="23" letter-spacing="3" fill="#4A2C1A">ER</text>
+                                    <text x="65" y="97" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="23" letter-spacing="1.5" fill="#4A2C1A">DOSE</text>
+                                    <line x1="32" y1="104" x2="50" y2="104" stroke="#4A2C1A" stroke-width="2.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="demitasse-handle">
+                            <svg viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M 4 8 C 26 4, 36 16, 36 25 C 36 34, 26 46, 4 42" fill="none" stroke="var(--outline)" stroke-width="18" stroke-linecap="round"/>
+                                <path d="M 4 8 C 26 4, 36 16, 36 25 C 36 34, 26 46, 4 42" fill="none" stroke="var(--white)" stroke-width="8" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="pour-stream"></div>
+                
+                <div id="pour-pitcher-wrap">
+                    <svg viewBox="0 0 140 160" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id="pg-body-p" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%"   stop-color="#8a9296"/><stop offset="22%"  stop-color="#b8c4c8"/><stop offset="45%"  stop-color="#dce8ec"/><stop offset="65%"  stop-color="#c0ccd0"/><stop offset="100%" stop-color="#7a8a8e"/>
+                        </linearGradient>
+                        <linearGradient id="pg-rim-p" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%"   stop-color="#9aa4a8"/><stop offset="50%"  stop-color="#e8f0f4"/><stop offset="100%" stop-color="#8a9296"/>
+                        </linearGradient>
+                        <linearGradient id="pg-milk-p" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%"   stop-color="#ffffff"/><stop offset="100%" stop-color="#f0ece0"/>
+                        </linearGradient>
+                        <clipPath id="pg-clip-p"><path d="M 34 50 Q 28 50 26 60 L 18 128 Q 16 144 70 146 Q 124 144 122 128 L 114 60 Q 112 50 106 50 Z"/></clipPath>
+                      </defs>
+                      <ellipse cx="70" cy="152" rx="52" ry="6" fill="rgba(61,43,31,0.2)"/>
+                      <path d="M 108 72 C 136 72, 142 84, 142 100 C 142 116, 136 130, 108 130" fill="none" stroke="#3D2B1F" stroke-width="14" stroke-linecap="round"/>
+                      <path d="M 108 72 C 134 72, 140 84, 140 100 C 140 116, 134 130, 108 130" fill="none" stroke="url(#pg-body-p)" stroke-width="9" stroke-linecap="round"/>
+                      <path d="M 108 76 C 130 78, 135 88, 135 100 C 135 112, 130 122, 108 126" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2.5" stroke-linecap="round"/>
+                      <path d="M 32 50 Q 24 50 22 62 L 14 130 Q 12 148 70 150 Q 128 148 126 130 L 118 62 Q 116 50 108 50 Z" fill="#3D2B1F"/>
+                      <path d="M 34 50 Q 28 50 26 60 L 18 128 Q 16 144 70 146 Q 124 144 122 128 L 114 60 Q 112 50 106 50 Z" fill="url(#pg-body-p)"/>
+                      <path d="M 40 52 Q 36 52 34 62 L 28 126 Q 27 140 38 143 L 40 143 Q 30 140 31 126 L 37 62 Q 39 53 42 52 Z" fill="rgba(255,255,255,0.12)"/>
+                      <rect id="pg-milk-rect-pour" x="20" y="72" width="100" height="74" fill="url(#pg-milk-p)" clip-path="url(#pg-clip-p)"/>
+                      <ellipse id="pg-foam-pour" cx="70" cy="72" rx="44" ry="9" fill="#faf6ee" opacity="0.9"/>
+                      <ellipse cx="58" cy="70" rx="12" ry="4" fill="rgba(255,255,255,0.7)"/>
+                      <ellipse cx="80" cy="71" rx="8"  ry="3" fill="rgba(255,255,255,0.5)"/>
+                      <ellipse cx="70" cy="52" rx="42" ry="11" fill="#3D2B1F"/>
+                      <ellipse cx="70" cy="50" rx="40" ry="10" fill="url(#pg-rim-p)"/>
+                      <path d="M 30 50 Q 70 62 110 50 Q 110 56 70 68 Q 30 56 30 50 Z" fill="#5a6468" opacity="0.6"/>
+                      <ellipse cx="70" cy="50" rx="34" ry="8" fill="#1c2226"/>
+                      <path d="M 44 44 Q 70 38 96 44" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M 32 46 L 10 50 L 32 56 Z" fill="#3D2B1F"/>
+                      <path d="M 33 47 L 14 50 L 33 54 Z" fill="url(#pg-rim-p)"/>
+                      <path d="M 22 90  Q 70 98  118 90"  fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                      <path d="M 20 110 Q 70 118 120 110" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                      <path d="M 48 54 Q 46 80 46 110 Q 46 130 48 140" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="4" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Result Screen -->
+    <div class="screen" id="screen-result">
+        <div class="station-bg"></div>
+        <div class="station-counter"></div>
+
+        <div class="result-card" id="result-card">
+            <div class="rank-badge" id="rank-badge">
+                <span class="rank-letter" id="rank-letter">S</span>
+            </div>
+
+            <div class="total-row">
+                <span>Overall Rank</span>
+                <span id="s-total">—</span>
+            </div>
+
+            <div class="verdict-bubble" id="verdict-bubble">
+                <div class="verdict-headline" id="verdict-headline">Loading...</div>
+                <div class="verdict-sub" id="verdict-sub">...</div>
+            </div>
+
+            <a class="invite-card" id="invite-card" href="https://maps.app.goo.gl/nppRZwiwYbypFads5" target="_blank" rel="noopener">
+                <div class="invite-pin" id="invite-pin">📍</div>
+                <div class="invite-text">
+                    <div class="invite-label" id="invite-label">You Are Invited</div>
+                    <div class="invite-name">Overdose — Overcamp 2026</div>
+                    <div class="invite-address">Tap to open in Maps</div>
+                </div>
+            </a>
+        </div>
+
+        <button class="btn-replay" onclick="location.reload()">Try Again</button>
+    </div>
+
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
