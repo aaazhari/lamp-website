@@ -160,6 +160,30 @@ const Game = {
         sound.pause();
         sound.currentTime = 0;
     },
+    fadeOutSound: function(sound, duration = 5000) {
+        if (!sound) return;
+    
+        const startVolume = sound.volume;
+        const steps = 50;
+        const interval = duration / steps;
+        let currentStep = 0;
+    
+        const fade = setInterval(() => {
+            currentStep++;
+    
+            sound.volume = Math.max(
+                0,
+                startVolume * (1 - currentStep / steps)
+            );
+    
+            if (currentStep >= steps) {
+                clearInterval(fade);
+                sound.pause();
+                sound.currentTime = 0;
+                sound.volume = startVolume; // Restore original volume for next game
+            }
+        }, interval);
+    },
 
     // Most browsers block audio.play() until the user has interacted with the
     // page. Try immediately; if that's rejected, retry once on the very first
@@ -739,8 +763,8 @@ const Game = {
 
     calculateFinalRank: function() {
         setTimeout(() => {
-            this.stopSound(this.sounds.bgm);
-        }, 5000);
+            this.fadeOutSound(this.sounds.bgm, 5000);
+        }, 2000);
         this.stopSound(this.sounds.grind);
         this.stopSound(this.sounds.extract);
         this.stopSound(this.sounds.steam);
