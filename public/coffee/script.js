@@ -160,27 +160,34 @@ const Game = {
         sound.pause();
         sound.currentTime = 0;
     },
-    fadeOutSound: function(sound, duration = 5000) {
+    fadeOutSound: function(sound, duration = 8000) {
         if (!sound) return;
     
         const startVolume = sound.volume;
-        const steps = 50;
+        const steps = 80;
         const interval = duration / steps;
         let currentStep = 0;
     
         const fade = setInterval(() => {
             currentStep++;
     
+            const progress = currentStep / steps;
+    
+            // Stronger, more noticeable fade curve
             sound.volume = Math.max(
                 0,
-                startVolume * (1 - currentStep / steps)
+                startVolume * Math.pow(1 - progress, 1.8)
             );
     
             if (currentStep >= steps) {
                 clearInterval(fade);
                 sound.pause();
-                sound.currentTime = 0;
-                sound.volume = startVolume; // Restore original volume for next game
+    
+                try {
+                    sound.currentTime = 0;
+                } catch (error) {}
+    
+                sound.volume = startVolume;
             }
         }, interval);
     },
@@ -763,7 +770,7 @@ const Game = {
 
     calculateFinalRank: function() {
         setTimeout(() => {
-            this.fadeOutSound(this.sounds.bgm, 5000);
+            this.fadeOutSound(this.sounds.bgm, 8000);
         }, 500);
         this.stopSound(this.sounds.grind);
         this.stopSound(this.sounds.extract);
