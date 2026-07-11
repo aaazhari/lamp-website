@@ -15,7 +15,7 @@ const Game = {
     scores: { grind: 0, extract: 0, steam: 0, pour: 0 },
 
     grindAmount: 0, grindSeconds: 0, extractionTime: 0, tempAmount: 0, pourAmount: 0,
-    isActionActive: false, actionInterval: null,
+    isActionActive: false, actionInterval: null, actionStartedAt: 0,
 
     GRIND_ZONE_MIN: 78, GRIND_ZONE_MAX: 94,
     EXTRACT_ZONE_MIN: 65, EXTRACT_ZONE_MAX: 90,
@@ -353,6 +353,7 @@ const Game = {
     },
 
     startAction: function(type) {
+        this.actionStartedAt = Date.now();
         if(this.isActionActive) return;
         this.isActionActive = true;
 
@@ -457,6 +458,9 @@ const Game = {
     },
 
     stopAction: function(type) {
+        if (Date.now() - this.actionStartedAt < 120) {
+            return;
+        }
         if(!this.isActionActive) return;
         this.isActionActive = false;
         this.stageResolved = true;
