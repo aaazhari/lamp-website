@@ -738,7 +738,9 @@ const Game = {
     },
 
     calculateFinalRank: function() {
-        this.stopSound(this.sounds.bgm);
+        setTimeout(() => {
+            this.stopSound(this.sounds.bgm);
+        }, 5000);
         this.stopSound(this.sounds.grind);
         this.stopSound(this.sounds.extract);
         this.stopSound(this.sounds.steam);
