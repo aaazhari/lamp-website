@@ -6,7 +6,7 @@ export const metadata = {
   openGraph: {
     title: "Bring Your Kid To Work Day Invitation",
     description: "Join us for a special experience with LAMP Event",
-    url: "https://lampevent.com/pacman",
+    url: "https://lampevent.com/games/pacman",
     siteName: "LAMP Event",
     images: [
       {
