@@ -295,8 +295,17 @@ const Game = {
     },
 
     showScreen: function(id) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.screen').forEach((screen) => {
+            screen.classList.remove('active');
+        });
+    
         document.getElementById('screen-' + id).classList.add('active');
+    
+        const replayBtn = document.getElementById('btn-replay');
+    
+        if (replayBtn) {
+            replayBtn.style.display = 'none';
+        }
     },
 
     nextPhase: function() {
@@ -739,6 +748,7 @@ const Game = {
         });
 
         let rank, rankColor, rankBg, totalLabel;
+        const replayBtn = document.getElementById("btn-replay");
         if(total >= 80) {
             rank = 'S'; rankColor = '#FFFFFF'; rankBg = 'var(--accent-green)'; totalLabel = 'Excellent';
         } else if(total >= 65) {
@@ -773,6 +783,9 @@ const Game = {
             invitePin.innerText = '📍';
             this.playSound(this.sounds.sparkle);
             this.spawnConfetti();
+            if (replayBtn) {
+                replayBtn.style.display = "none";
+            }
         } else {
             bubble.style.background = '#FFE4F0';
             bubble.style.borderColor = '#E8327A';
@@ -787,6 +800,9 @@ const Game = {
             inviteLabel.innerText = 'Come Learn From Us';
             invitePin.innerText = '📍';
             this.playSound(this.sounds.fail);
+            if (replayBtn) {
+                replayBtn.style.display = "block";
+            }
         }
     }
 };
