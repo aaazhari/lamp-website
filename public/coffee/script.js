@@ -192,19 +192,36 @@ const Game = {
     bindHoldButton: function(btnId, action) {
         const el = document.getElementById(btnId);
         if(!el) return;
-        el.addEventListener('pointerdown', (e) => {
+    
+        const startHolding = (e) => {
             e.preventDefault();
-            if (!this.gameStartedTracked) {
+    
+            if(this.stageResolved || this.isActionActive) return;
+    
+            if(!this.gameStartedTracked) {
                 this.gameStartedTracked = true;
                 trackCoffeeEvent("coffee_game_start", { stage: action });
             }
-            if(this.stageResolved) return;
-            if(this.isActionActive) {
-                this.stopAction(action);
-            } else {
-                this.startAction(action);
-            }
-        });
+    
+            el.setPointerCapture(e.pointerId);
+            this.startAction(action);
+        };
+    
+        const stopHolding = (e) => {
+            e.preventDefault();
+    
+            if(!this.isActionActive || this.stageResolved) return;
+    
+            try {
+                el.releasePointerCapture(e.pointerId);
+            } catch(error) {}
+    
+            this.stopAction(action);
+        };
+    
+        el.addEventListener("pointerdown", startHolding);
+        el.addEventListener("pointerup", stopHolding);
+        el.addEventListener("pointercancel", stopHolding);
     },
 
     bindPitcherPourDrag: function() {
