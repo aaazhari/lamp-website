@@ -365,29 +365,39 @@
         <div class="station-bg"></div>
         <div class="station-counter"></div>
 
-        <div class="result-card" id="result-card">
-            <div class="rank-badge" id="rank-badge">
-                <span class="rank-letter" id="rank-letter">S</span>
-            </div>
+        <div class="result-card invitation-result-card" id="result-card">
 
-            <div class="total-row">
-                <span>Overall Rank</span>
-                <span id="s-total">—</span>
-            </div>
-
-            <div class="verdict-bubble" id="verdict-bubble">
-                <div class="verdict-headline" id="verdict-headline">Loading...</div>
-                <div class="verdict-sub" id="verdict-sub">...</div>
-            </div>
-
-            <a class="invite-card" id="invite-card" href="https://maps.app.goo.gl/nppRZwiwYbypFads5" target="_blank" rel="noopener">
-                <div class="invite-pin" id="invite-pin">📍</div>
-                <div class="invite-text">
-                    <div class="invite-label" id="invite-label">You Are Invited</div>
-                    <div class="invite-name">Overdose — Overcamp 2026</div>
-                    <div class="invite-address">Tap to open in Maps</div>
-                </div>
+            <a
+                class="result-invitation-link"
+                href="https://maps.app.goo.gl/nppRZwiwYbypFads5"
+                target="_blank"
+                rel="noopener"
+                aria-label="Open Overdose location in Google Maps"
+            >
+                <img
+                    src="AbrarDose-Invitation.png"
+                    alt="AbrarDose Overcamp Invitation"
+                    class="result-invitation-image"
+                />
             </a>
+        
+            <!-- Keep these elements because script.js still updates them -->
+            <div class="result-script-elements" aria-hidden="true">
+                <div class="rank-badge" id="rank-badge">
+                    <span class="rank-letter" id="rank-letter">S</span>
+                </div>
+        
+                <span id="s-total">—</span>
+        
+                <div id="verdict-bubble">
+                    <div id="verdict-headline"></div>
+                    <div id="verdict-sub"></div>
+                </div>
+        
+                <div id="invite-label"></div>
+                <div id="invite-pin"></div>
+            </div>
+        
         </div>
 
         <button class="btn-replay" onclick="location.reload()">Try Again</button>
