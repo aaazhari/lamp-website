@@ -78,7 +78,7 @@ const Game = {
         this.sounds.pour = new Audio('coffee pouring.mp3');
         this.sounds.bgm = new Audio('CoffeeBackgroundMusic.mp3');
         this.sounds.bgm.loop = true;
-        this.sounds.bgm.volume = 0.25;
+        this.sounds.bgm.volume = 0.1;
         this.sounds.sparkle = new Audio('sparkle.mp3');
         this.sounds.fail = new Audio('fail.mp3');
 
