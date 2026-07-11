@@ -738,6 +738,11 @@ const Game = {
     },
 
     calculateFinalRank: function() {
+        this.stopSound(this.sounds.bgm);
+        this.stopSound(this.sounds.grind);
+        this.stopSound(this.sounds.extract);
+        this.stopSound(this.sounds.steam);
+        this.stopSound(this.sounds.pour);
         const s = this.scores;
         let total = Math.round((s.grind + s.extract + s.steam + s.pour) / 4);
         if(this.hardFailed) total = 15; // missing a target zone always ranks as Poor
