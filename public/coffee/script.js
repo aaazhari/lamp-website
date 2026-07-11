@@ -783,6 +783,20 @@ const Game = {
             invitePin.innerText = '📍';
             this.playSound(this.sounds.sparkle);
             this.spawnConfetti();
+            const invitation = document.querySelector(".result-invitation-image");
+if (invitation) {
+    invitation.animate(
+        [
+            { opacity: 0, transform: "scale(0.92)" },
+            { opacity: 1, transform: "scale(1)" }
+        ],
+        {
+            duration: 700,
+            easing: "ease-out",
+            fill: "forwards"
+        }
+    );
+}
             if (replayBtn) {
                 replayBtn.style.display = "none";
             }
